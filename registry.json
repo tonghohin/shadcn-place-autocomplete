@@ -1,0 +1,20 @@
+{
+  "name": "shadcn/geosearch",
+  "homepage": "https://shadcn-geosearch.vercel.app",
+  "items": [
+    {
+      "name": "address-search",
+      "type": "registry:ui",
+      "title": "Address Search",
+      "author": "Hin",
+      "description": "An address search component.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/new-york-v4/ui/address-search.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
