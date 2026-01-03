@@ -19,7 +19,7 @@ import { CheckIcon, ChevronDownCircle, CopyIcon } from "lucide-react"
 
 function getPromptUrl(baseURL: string, url: string) {
     return `${baseURL}?q=${encodeURIComponent(
-        `I’m looking at this tour component documentation: ${url}.
+        `I’m looking at this shadcn geosearch documentation: ${url}.
 Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.
   `
     )}`

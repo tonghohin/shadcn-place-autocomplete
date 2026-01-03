@@ -31,9 +31,7 @@ export default function IndexPage() {
     return (
         <div className="flex flex-1 flex-col">
             <section className="container-wrapper flex flex-col">
-                <div
-                    data-tour-step-id="tour-header"
-                    className="container flex w-fit flex-col items-center gap-2 text-center xl:gap-4">
+                <div className="container flex w-fit flex-col items-center gap-2 text-center xl:gap-4">
                     <h1 className="text-primary leading-tighter max-w-4xl text-4xl font-semibold tracking-tight text-balance lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter">
                         {title}
                     </h1>

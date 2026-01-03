@@ -8,12 +8,7 @@ import React from "react"
 
 export function GitHubLink() {
     return (
-        <Button
-            asChild
-            size="sm"
-            variant="ghost"
-            className="h-8 shadow-none"
-            data-tour-step-id="tour-github">
+        <Button asChild size="sm" variant="ghost" className="h-8 shadow-none">
             <Link
                 href={siteConfig.links.github}
                 target="_blank"
