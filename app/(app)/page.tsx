@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/config"
+import { AddressSearch } from "@/registry/new-york-v4/ui/address-search"
 import type { Metadata } from "next"
 
 const title = siteConfig.title
@@ -40,7 +41,9 @@ export default function IndexPage() {
                     </p>
                 </div>
             </section>
-            <div className="flex flex-1 flex-col items-center justify-center"></div>
+            <div className="flex flex-1 flex-col items-center justify-center">
+                <AddressSearch className="w-96" />
+            </div>
         </div>
     )
 }
