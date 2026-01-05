@@ -306,7 +306,8 @@ function AddressSearch({
     return (
         <Command
             className={cn("border shadow-md", className)}
-            shouldFilter={false}>
+            shouldFilter={false}
+            loop>
             <InputGroup
                 data-disabled
                 className="rounded-none border-none shadow-none !ring-0 dark:bg-transparent">
