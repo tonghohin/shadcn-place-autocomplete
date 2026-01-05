@@ -261,10 +261,12 @@ function AddressSearch({
     value: controlledValue,
     onChange: controlledOnChange,
     onSelect,
+    onResultsChange,
     ...props
 }: {
     debounceMs?: number
     onSelect?: (feature: AddressFeature) => void
+    onResultsChange?: (results: AddressFeature[]) => void
 } & Omit<AddressSearchOptions, "query"> &
     React.ComponentProps<"input">) {
     const [internalValue, setInternalValue] = React.useState("")
@@ -286,6 +288,10 @@ function AddressSearch({
         zoom,
         locationBiasScale,
     })
+
+    React.useEffect(() => {
+        onResultsChange?.(results)
+    }, [results, onResultsChange])
 
     function handleSelect(feature: AddressFeature) {
         const address = formatAddress(feature.properties)
