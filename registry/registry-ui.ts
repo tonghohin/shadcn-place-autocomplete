@@ -2,15 +2,16 @@ import { type Registry } from "shadcn/schema"
 
 export const ui: Registry["items"] = [
     {
-        name: "address-search",
-        title: "Address Search",
-        description: "An address search component.",
+        name: "place-autocomplete",
+        title: "Place Autocomplete",
+        description: "A place autocomplete component.",
         author: "Hin",
         type: "registry:ui",
-        registryDependencies: [],
+        registryDependencies: ["command", "input-group", "spinner"],
+        devDependencies: ["@types/geojson"],
         files: [
             {
-                path: "ui/address-search.tsx",
+                path: "ui/place-autocomplete.tsx",
                 type: "registry:ui",
             },
         ],

@@ -1,5 +1,5 @@
 import { siteConfig } from "@/lib/config"
-import { AddressSearch } from "@/registry/new-york-v4/ui/address-search"
+import { PlaceAutocomplete } from "@/registry/new-york-v4/ui/place-autocomplete"
 import type { Metadata } from "next"
 
 const title = siteConfig.title
@@ -42,7 +42,7 @@ export default function IndexPage() {
                 </div>
             </section>
             <div className="flex flex-1 flex-col items-center justify-center">
-                <AddressSearch className="w-96" />
+                <PlaceAutocomplete className="w-96" />
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import { ui } from "@/registry/registry-ui"
 import { examples } from "./registry-examples"
 
 export const registry = {
-    name: "shadcn/geosearch",
-    homepage: "https://shadcn-geosearch.vercel.app",
+    name: "shadcn/place-autocomplete",
+    homepage: "https://shadcn-place-autocomplete.vercel.app",
     items: z.array(registryItemSchema).parse([...ui, ...examples]),
 } satisfies Registry

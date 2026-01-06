@@ -21,14 +21,10 @@ export const metadata: Metadata = {
         "shadcn/ui address autocomplete",
         "shadcn address autocomplete component",
         "shadcn/ui address autocomplete component",
-        "shadcn geosearch",
-        "shadcn/ui geosearch",
-        "shadcn geosearch component",
-        "shadcn/ui geosearch component",
-        "shadcn address search",
-        "shadcn/ui address search",
-        "shadcn address search component",
-        "shadcn/ui address search component",
+        "shadcn place autocomplete",
+        "shadcn/ui place autocomplete",
+        "shadcn place autocomplete component",
+        "shadcn/ui place autocomplete component",
     ],
     authors: [
         {

@@ -1,12 +1,12 @@
 export const siteConfig = {
-    name: "shadcn geosearch",
-    url: "https://shadcn-geosearch.vercel.app",
-    title: "Geosearch components for shadcn/ui",
+    name: "shadcn place autocomplete",
+    url: "https://shadcn-place-autocomplete.vercel.app",
+    title: "A place autocomplete component for shadcn/ui",
     description:
-        "Address autocomplete and coordinate search components powered by OpenStreetMap.",
+        "The open-source place autocomplete component for shadcn/ui. Powered by OSM and Photon.",
     links: {
-        website: "https://shadcn-geosearch.vercel.app",
-        github: "https://github.com/tonghohin/shadcn-geosearch",
+        website: "https://shadcn-place-autocomplete.vercel.app",
+        github: "https://github.com/tonghohin/shadcn-place-autocomplete",
     },
     navItems: [
         {

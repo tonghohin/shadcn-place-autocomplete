@@ -6,18 +6,18 @@
 import * as React from "react"
 
 export const Index: Record<string, any> = {
-  "address-search": {
-    name: "address-search",
-    description: "An address search component.",
+  "place-autocomplete": {
+    name: "place-autocomplete",
+    description: "A place autocomplete component.",
     type: "registry:ui",
-    registryDependencies: [],
+    registryDependencies: ["command","input-group","spinner"],
     files: [{
-      path: "registry/new-york-v4/ui/address-search.tsx",
+      path: "registry/new-york-v4/ui/place-autocomplete.tsx",
       type: "registry:ui",
       target: ""
     }],
     component: React.lazy(async () => {
-      const mod = await import("@/registry/new-york-v4/ui/address-search.tsx")
+      const mod = await import("@/registry/new-york-v4/ui/place-autocomplete.tsx")
       const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
       return { default: mod.default || mod[exportName] }
     }),

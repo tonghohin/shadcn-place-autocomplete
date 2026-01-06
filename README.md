@@ -1,10 +1,10 @@
-# shadcn/ui Geosearch
+# shadcn/ui Place Autocomplete
 
-Address autocomplete and coordinate search components powered by OpenStreetMap, designed to integrate with shadcn/ui.
+The open-source place autocomplete component for shadcn/ui. Powered by OSM and Photon.
 
 ## Documentation
 
-Visit https://shadcn-geosearch.vercel.app/docs to view the documentation.
+Visit https://shadcn-place-autocomplete.vercel.app/docs to view the documentation.
 
 ## License
 

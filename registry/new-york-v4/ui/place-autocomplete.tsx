@@ -18,7 +18,7 @@ import type { BBox, Feature, FeatureCollection, Point } from "geojson"
 import { MapPinIcon, SearchIcon } from "lucide-react"
 import * as React from "react"
 
-interface AddressFeatureProperties {
+interface PlaceFeatureProperties {
     osm_id: number
     osm_type: "N" | "W" | "R"
     osm_key: string
@@ -38,17 +38,14 @@ interface AddressFeatureProperties {
     extent?: [number, number, number, number]
     extra?: Record<string, string>
 }
-type AddressFeature = Feature<Point, AddressFeatureProperties>
-type AddressFeatureCollection = FeatureCollection<
-    Point,
-    AddressFeatureProperties
->
+type PlaceFeature = Feature<Point, PlaceFeatureProperties>
+type PlaceFeatureCollection = FeatureCollection<Point, PlaceFeatureProperties>
 
 /**
  * Query parameters for Photon geocoding API
  * @see https://github.com/komoot/photon#photon-api
  */
-interface AddressSearchOptions {
+interface PlaceSearchOptions {
     /** Search text (address, place name, or POI) */
     query: string
     /** Preferred language for results (e.g., "en", "de", "fr") */
@@ -75,7 +72,7 @@ interface AddressSearchOptions {
     locationBiasScale?: number
 }
 
-function formatAddress(properties: AddressFeatureProperties) {
+function formatAddress(properties: PlaceFeatureProperties) {
     const parts = []
 
     if (properties.name) {
@@ -114,7 +111,7 @@ function buildSearchUrl({
     locationBiasScale,
     lon,
     zoom,
-}: AddressSearchOptions) {
+}: PlaceSearchOptions) {
     const url = new URL("https://photon.komoot.io/api")
     url.searchParams.set("q", query)
 
@@ -150,26 +147,21 @@ function useDebounce<T>(value: T, delay: number = 300) {
     const [debouncedValue, setDebouncedValue] = React.useState<T>(value)
 
     React.useEffect(() => {
-        const timer = setTimeout(() => {
-            setDebouncedValue(value)
-        }, delay)
-
-        return () => {
-            clearTimeout(timer)
-        }
+        const timer = setTimeout(() => setDebouncedValue(value), delay)
+        return () => clearTimeout(timer)
     }, [value, delay])
 
     return debouncedValue
 }
 
-function useAddressSearch({
+function usePlaceSearch({
     debounceMs,
     query,
     ...props
 }: {
     debounceMs: number
-} & AddressSearchOptions) {
-    const [results, setResults] = React.useState<AddressFeature[]>([])
+} & PlaceSearchOptions) {
+    const [results, setResults] = React.useState<PlaceFeature[]>([])
     const [isLoading, setIsLoading] = React.useState(false)
     const [error, setError] = React.useState<Error | null>(null)
     const [hasSearched, setHasSearched] = React.useState(false)
@@ -192,11 +184,7 @@ function useAddressSearch({
             setHasSearched(true)
 
             try {
-                const url = buildSearchUrl({
-                    query: debouncedQuery,
-                    ...props,
-                })
-
+                const url = buildSearchUrl({ query: debouncedQuery, ...props })
                 const response = await fetch(url, {
                     signal: abortController.signal,
                 })
@@ -207,15 +195,12 @@ function useAddressSearch({
                     )
                 }
 
-                const data: AddressFeatureCollection = await response.json()
-                const features = data.features
+                const data: PlaceFeatureCollection = await response.json()
                 const addressOsmIds = new Set()
-                const dedupedFeatures = features.filter((feature) => {
-                    const featureOsmId = feature.properties.osm_id
-                    if (addressOsmIds.has(featureOsmId)) {
-                        return false
-                    }
-                    addressOsmIds.add(featureOsmId)
+                const dedupedFeatures = data.features.filter((feature) => {
+                    const id = feature.properties.osm_id
+                    if (addressOsmIds.has(id)) return false
+                    addressOsmIds.add(id)
                     return true
                 })
                 setResults(dedupedFeatures)
@@ -231,9 +216,7 @@ function useAddressSearch({
 
         fetchResults()
 
-        return () => {
-            abortController.abort()
-        }
+        return () => abortController.abort()
     }, [
         debouncedQuery,
         props.lang,
@@ -248,7 +231,7 @@ function useAddressSearch({
     return { results, isLoading, error, hasSearched }
 }
 
-function AddressSearch({
+function PlaceAutocomplete({
     debounceMs = 300,
     lang,
     limit = 5,
@@ -259,26 +242,28 @@ function AddressSearch({
     locationBiasScale,
     className,
     value: controlledValue,
+    defaultValue = "",
     onChange: controlledOnChange,
-    onSelect,
+    onPlaceSelect,
     onResultsChange,
     ...props
 }: {
     debounceMs?: number
-    onSelect?: (feature: AddressFeature) => void
-    onResultsChange?: (results: AddressFeature[]) => void
-} & Omit<AddressSearchOptions, "query"> &
-    React.ComponentProps<"input">) {
-    const [internalValue, setInternalValue] = React.useState("")
-    const isControlled = controlledValue !== undefined
-    const value = String(isControlled ? controlledValue : internalValue)
-    const onChange = isControlled
-        ? controlledOnChange
-        : (event: React.ChangeEvent<HTMLInputElement>) =>
-              setInternalValue(event.target.value)
+    value?: string
+    defaultValue?: string
+    onChange?: (value: string) => void
+    onPlaceSelect?: (feature: PlaceFeature) => void
+    onResultsChange?: (results: PlaceFeature[]) => void
+} & Omit<PlaceSearchOptions, "query"> &
+    Omit<React.ComponentProps<"input">, "value" | "onChange">) {
+    const [internalValue, setInternalValue] = React.useState(defaultValue)
+    const [searchQuery, setSearchQuery] = React.useState("")
 
-    const { results, isLoading, error, hasSearched } = useAddressSearch({
-        query: value,
+    const isControlled = controlledValue !== undefined
+    const displayValue = isControlled ? controlledValue : internalValue
+
+    const { results, isLoading, error, hasSearched } = usePlaceSearch({
+        query: searchQuery,
         debounceMs,
         lang,
         limit,
@@ -293,31 +278,30 @@ function AddressSearch({
         onResultsChange?.(results)
     }, [results, onResultsChange])
 
-    function handleSelect(feature: AddressFeature) {
-        const address = formatAddress(feature.properties)
-        setInternalValue(address)
-        onSelect?.(feature)
-    }
-
     const hasNoResults =
         hasSearched && !isLoading && !error && results.length === 0
-    const hasResults = results.length > 0
+    const showCommandList = error || hasNoResults || results.length > 0
 
     return (
         <Command
             className={cn("border shadow-md", className)}
             shouldFilter={false}
             loop>
-            <InputGroup
-                data-disabled
-                className="rounded-none border-none shadow-none !ring-0 dark:bg-transparent">
+            <InputGroup className="rounded-none border-none shadow-none !ring-0 dark:bg-transparent">
                 <InputGroupAddon>
                     <SearchIcon />
                 </InputGroupAddon>
                 <InputGroupInput
-                    placeholder="Search for an address..."
-                    value={value}
-                    onChange={onChange}
+                    placeholder="Search"
+                    value={displayValue}
+                    onChange={(event) => {
+                        const newValue = event.target.value
+                        if (!isControlled) {
+                            setInternalValue(newValue)
+                        }
+                        setSearchQuery(newValue)
+                        controlledOnChange?.(newValue)
+                    }}
                     {...props}
                 />
                 {isLoading && (
@@ -326,38 +310,54 @@ function AddressSearch({
                     </InputGroupAddon>
                 )}
             </InputGroup>
-            {(error || hasNoResults || hasResults) && (
+            {showCommandList && (
                 <CommandList className="border-t">
                     {error && (
                         <CommandEmpty>Error: {error.message}</CommandEmpty>
                     )}
                     {hasNoResults && (
-                        <CommandEmpty>Can't find {value}.</CommandEmpty>
+                        <CommandEmpty>Can't find {displayValue}.</CommandEmpty>
                     )}
-                    {hasResults && (
+                    {results.length > 0 && (
                         <CommandGroup>
                             {results.map((feature) => {
                                 const formattedAddress = formatAddress(
                                     feature.properties
                                 )
-
                                 return (
                                     <CommandItem
                                         key={feature.properties.osm_id}
                                         value={String(
                                             feature.properties.osm_id
                                         )}
-                                        onSelect={() => handleSelect(feature)}>
+                                        onSelect={() => {
+                                            const formattedAddress =
+                                                formatAddress(
+                                                    feature.properties
+                                                )
+
+                                            if (!isControlled) {
+                                                setInternalValue(
+                                                    formattedAddress
+                                                )
+                                            }
+
+                                            setSearchQuery("")
+                                            controlledOnChange?.(
+                                                formattedAddress
+                                            )
+                                            onPlaceSelect?.(feature)
+                                        }}>
                                         <MapPinIcon />
-                                        <div>
-                                            <p className="font-medium">
+                                        <div className="flex flex-col">
+                                            <span className="font-medium">
                                                 {feature.properties.name ||
                                                     feature.properties.street ||
-                                                    "Unknown Address"}
-                                            </p>
-                                            <p className="text-muted-foreground text-xs">
+                                                    "Unknown"}
+                                            </span>
+                                            <span className="text-muted-foreground text-xs">
                                                 {formattedAddress}
-                                            </p>
+                                            </span>
                                         </div>
                                     </CommandItem>
                                 )
@@ -370,4 +370,4 @@ function AddressSearch({
     )
 }
 
-export { AddressSearch }
+export { PlaceAutocomplete }

@@ -1,6 +1,6 @@
 {
-    "name": "shadcn GeoSearch",
-    "short_name": "ShadcnGeoSearch",
+    "name": "shadcn Place Autocomplete",
+    "short_name": "ShadcnPlaceAutocomplete",
     "icons": [
         {
             "src": "/web-app-manifest-192x192.png",

@@ -24,7 +24,7 @@ export function GitHubLink() {
 
 export async function StarsCount() {
     const data = await fetch(
-        "https://api.github.com/repos/tonghohin/shadcn-geosearch"
+        "https://api.github.com/repos/tonghohin/shadcn-place-autocomplete"
     )
     const json = await data.json()
     if (!json.stargazers_count) return null

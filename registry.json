@@ -1,17 +1,24 @@
 {
-  "name": "shadcn/geosearch",
-  "homepage": "https://shadcn-geosearch.vercel.app",
+  "name": "shadcn/place-autocomplete",
+  "homepage": "https://shadcn-place-autocomplete.vercel.app",
   "items": [
     {
-      "name": "address-search",
+      "name": "place-autocomplete",
       "type": "registry:ui",
-      "title": "Address Search",
+      "title": "Place Autocomplete",
       "author": "Hin",
-      "description": "An address search component.",
-      "registryDependencies": [],
+      "description": "A place autocomplete component.",
+      "devDependencies": [
+        "@types/geojson"
+      ],
+      "registryDependencies": [
+        "command",
+        "input-group",
+        "spinner"
+      ],
       "files": [
         {
-          "path": "registry/new-york-v4/ui/address-search.tsx",
+          "path": "registry/new-york-v4/ui/place-autocomplete.tsx",
           "type": "registry:ui"
         }
       ]
