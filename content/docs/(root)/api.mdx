@@ -1,55 +1,25 @@
 ---
 title: API Reference
-description: Complete API reference for the Tour component.
+description: Complete API reference for the PlaceAutocomplete component.
 component: true
 ---
 
-## TourProvider
+## Place Autocomplete
 
-The `TourProvider` component is the main container that provides tour functionality to your application.
+Provides a searchable input field that queries the Photon geocoding API to find places, addresses, and points of interest.
 
 ### Props
 
-| Prop       | Type              | Description                            |
-| ---------- | ----------------- | -------------------------------------- |
-| `tours`    | `Tour[]`          | Array of tours configuration.          |
-| `children` | `React.ReactNode` | Content to wrap with the tour context. |
-
-## Tour
-
-Configuration object for a tour.
-
-| Property | Type     | Description                     |
-| -------- | -------- | ------------------------------- |
-| `id`     | `string` | Unique identifier for the tour. |
-| `steps`  | `Step[]` | Array of steps in the tour.     |
-
-## Step
-
-Each step in the tour has the following properties:
-
-| Property        | Type                                     | Description                                                                                                    |
-| --------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `id`            | `string`                                 | Unique identifier for the step. Used to find the target element by matching its `data-tour-step-id` attribute. |
-| `title`         | `React.ReactNode`                        | Title displayed in the tour card.                                                                              |
-| `content`       | `React.ReactNode`                        | Content displayed in the tour card.                                                                            |
-| `side`          | `"top" \| "bottom" \| "left" \| "right"` | Optional. The preferred side of the anchor to render against when open.                                        |
-| `sideOffset`    | `number`                                 | Optional. The distance in pixels from the anchor.                                                              |
-| `align`         | `"start" \| "center" \| "end"`           | Optional. The preferred alignment against the anchor.                                                          |
-| `alignOffset`   | `number`                                 | Optional. An offset in pixels from the "start" or "end" alignment options.                                     |
-| `className`     | `string`                                 | Optional. Additional CSS classes to apply to the tour popover.                                                 |
-| `nextRoute`     | `string`                                 | Optional. Route to navigate to when the "Next" button is clicked.                                              |
-| `previousRoute` | `string`                                 | Optional. Route to navigate to when the "Previous" button is clicked.                                          |
-| `nextLabel`     | `React.ReactNode`                        | Optional. Custom content for the "Next" button. Defaults to "Next" or "Finish" on the last step.               |
-| `previousLabel` | `React.ReactNode`                        | Optional. Custom content for the "Previous" button. Defaults to "Previous".                                    |
-
-## useTour
-
-The `useTour` hook provides methods to control the tour's visibility.
-
-### Return Value
-
-| Property | Type                       | Description                                  |
-| -------- | -------------------------- | -------------------------------------------- |
-| `start`  | `(tourId: string) => void` | Function to start a specific tour by its ID. |
-| `close`  | `() => void`               | Function to close the current tour.          |
+| Prop                | Type                                                         | Description                                                                                         |
+| ------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `onPlaceSelect`     | `(feature: PlaceFeature) => void`                            | Optional. Callback fired when a place is selected from the results.                                 |
+| `onResultsChange`   | `(results: PlaceFeature[]) => void`                          | Optional. Callback fired when search results change.                                                |
+| `debounceMs`        | `number`                                                     | Optional. Debounce delay in milliseconds before triggering a search. Defaults to `300`.             |
+| `lang`              | `string`                                                     | Optional. Preferred language for results (e.g., "en", "de", "fr").                                  |
+| `limit`             | `number`                                                     | Optional. Maximum number of results to return. Defaults to `5`.                                     |
+| `bbox`              | `[number, number, number, number]`                           | Optional. Bounding box to restrict results: [minLongitude, minLatitude, maxLongitude, maxLatitude]. |
+| `lat`               | `number`                                                     | Optional. Latitude used to bias results toward a specific location.                                 |
+| `lon`               | `number`                                                     | Optional. Longitude used to bias results toward a specific location.                                |
+| `zoom`              | `number`                                                     | Optional. Zoom level used for location biasing. Higher values increase locality.                    |
+| `locationBiasScale` | `number`                                                     | Optional. Strength of the location bias.                                                            |
+| `...props`          | `Omit<React.ComponentProps<"input">, "value" \| "onChange">` | All other standard input element props.                                                             |

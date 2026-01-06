@@ -284,7 +284,7 @@ function PlaceAutocomplete({
 
     return (
         <Command
-            className={cn("border shadow-md", className)}
+            className={cn("h-fit border shadow-md", className)}
             shouldFilter={false}
             loop>
             <InputGroup className="rounded-none border-none shadow-none !ring-0 dark:bg-transparent">

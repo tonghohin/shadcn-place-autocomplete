@@ -24,4 +24,76 @@ export const Index: Record<string, any> = {
     categories: undefined,
     meta: undefined,
   },
+  "controlled-value": {
+    name: "controlled-value",
+    description: "",
+    type: "registry:example",
+    registryDependencies: ["place-autocomplete"],
+    files: [{
+      path: "registry/new-york-v4/examples/controlled-value.tsx",
+      type: "registry:example",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/registry/new-york-v4/examples/controlled-value.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: undefined,
+    meta: undefined,
+  },
+  "geocode-settings": {
+    name: "geocode-settings",
+    description: "",
+    type: "registry:example",
+    registryDependencies: ["place-autocomplete"],
+    files: [{
+      path: "registry/new-york-v4/examples/geocode-settings.tsx",
+      type: "registry:example",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/registry/new-york-v4/examples/geocode-settings.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: undefined,
+    meta: undefined,
+  },
+  "place-selection": {
+    name: "place-selection",
+    description: "",
+    type: "registry:example",
+    registryDependencies: ["place-autocomplete"],
+    files: [{
+      path: "registry/new-york-v4/examples/place-selection.tsx",
+      type: "registry:example",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/registry/new-york-v4/examples/place-selection.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: undefined,
+    meta: undefined,
+  },
+  "search-results-change": {
+    name: "search-results-change",
+    description: "",
+    type: "registry:example",
+    registryDependencies: ["place-autocomplete"],
+    files: [{
+      path: "registry/new-york-v4/examples/search-results-change.tsx",
+      type: "registry:example",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/registry/new-york-v4/examples/search-results-change.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: undefined,
+    meta: undefined,
+  },
   }
