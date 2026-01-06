@@ -284,88 +284,105 @@ function PlaceAutocomplete({
 
     return (
         <Command
-            className={cn("h-fit border shadow-md", className)}
+            className={cn("overflow-visible", className)}
             shouldFilter={false}
             loop>
-            <InputGroup className="rounded-none border-none shadow-none !ring-0 dark:bg-transparent">
-                <InputGroupAddon>
-                    <SearchIcon />
-                </InputGroupAddon>
-                <InputGroupInput
-                    placeholder="Search"
-                    value={displayValue}
-                    onChange={(event) => {
-                        const newValue = event.target.value
-                        if (!isControlled) {
-                            setInternalValue(newValue)
-                        }
-                        setSearchQuery(newValue)
-                        controlledOnChange?.(newValue)
-                    }}
-                    {...props}
-                />
-                {isLoading && (
-                    <InputGroupAddon align="inline-end">
-                        <Spinner />
+            <div className="relative">
+                <InputGroup
+                    className={cn(
+                        "!border-input !bg-popover !ring-0",
+                        showCommandList && "rounded-b-none"
+                    )}>
+                    <InputGroupAddon>
+                        <SearchIcon />
                     </InputGroupAddon>
-                )}
-            </InputGroup>
-            {showCommandList && (
-                <CommandList className="border-t">
-                    {error && (
-                        <CommandEmpty>Error: {error.message}</CommandEmpty>
+                    <InputGroupInput
+                        placeholder="Search"
+                        value={displayValue}
+                        onChange={(event) => {
+                            const newValue = event.target.value
+                            if (!isControlled) {
+                                setInternalValue(newValue)
+                            }
+                            setSearchQuery(newValue)
+                            controlledOnChange?.(newValue)
+                        }}
+                        {...props}
+                    />
+                    {isLoading && (
+                        <InputGroupAddon align="inline-end">
+                            <Spinner />
+                        </InputGroupAddon>
                     )}
-                    {hasNoResults && (
-                        <CommandEmpty>Can't find {displayValue}.</CommandEmpty>
-                    )}
-                    {results.length > 0 && (
-                        <CommandGroup>
-                            {results.map((feature) => {
-                                const formattedAddress = formatAddress(
-                                    feature.properties
-                                )
-                                return (
-                                    <CommandItem
-                                        key={feature.properties.osm_id}
-                                        value={String(
-                                            feature.properties.osm_id
-                                        )}
-                                        onSelect={() => {
-                                            const formattedAddress =
-                                                formatAddress(
-                                                    feature.properties
-                                                )
+                </InputGroup>
+                {showCommandList && (
+                    <CommandList
+                        data-state={showCommandList ? "open" : "closed"}
+                        className={cn(
+                            "bg-popover border-input absolute top-full right-0 left-0 rounded-b-md border border-t-0 shadow-md",
+                            "data-[state=open]:animate-in data-[state=closed]:animate-out",
+                            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+                            "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+                            "data-[state=open]:slide-in-from-top-2 data-[state=closed]:slide-out-to-top-2"
+                        )}>
+                        {error && (
+                            <CommandEmpty>Error: {error.message}</CommandEmpty>
+                        )}
+                        {hasNoResults && (
+                            <CommandEmpty>
+                                Can't find {displayValue}.
+                            </CommandEmpty>
+                        )}
+                        {results.length > 0 && (
+                            <CommandGroup>
+                                {results.map((feature) => {
+                                    const formattedAddress = formatAddress(
+                                        feature.properties
+                                    )
+                                    return (
+                                        <CommandItem
+                                            key={feature.properties.osm_id}
+                                            value={String(
+                                                feature.properties.osm_id
+                                            )}
+                                            onSelect={() => {
+                                                const formattedAddress =
+                                                    formatAddress(
+                                                        feature.properties
+                                                    )
 
-                                            if (!isControlled) {
-                                                setInternalValue(
+                                                if (!isControlled) {
+                                                    setInternalValue(
+                                                        formattedAddress
+                                                    )
+                                                }
+
+                                                setSearchQuery("")
+                                                controlledOnChange?.(
                                                     formattedAddress
                                                 )
-                                            }
-
-                                            setSearchQuery("")
-                                            controlledOnChange?.(
-                                                formattedAddress
-                                            )
-                                            onPlaceSelect?.(feature)
-                                        }}>
-                                        <MapPinIcon />
-                                        <div className="flex flex-col">
-                                            <span className="font-medium">
-                                                {feature.properties.name ||
-                                                    feature.properties.street ||
-                                                    "Unknown"}
-                                            </span>
-                                            <span className="text-muted-foreground text-xs">
-                                                {formattedAddress}
-                                            </span>
-                                        </div>
-                                    </CommandItem>
-                                )
-                            })}
-                        </CommandGroup>
-                    )}
-                </CommandList>
-            )}
+                                                onPlaceSelect?.(feature)
+                                            }}>
+                                            <MapPinIcon />
+                                            <div className="flex flex-col">
+                                                <span className="font-medium">
+                                                    {feature.properties.name ||
+                                                        feature.properties
+                                                            .street ||
+                                                        "Unknown"}
+                                                </span>
+                                                <span className="text-muted-foreground text-xs">
+                                                    {formattedAddress}
+                                                </span>
+                                            </div>
+                                        </CommandItem>
+                                    )
+                                })}
+                            </CommandGroup>
+                        )}
+                    </CommandList>
+                )}
+            </div>
         </Command>
     )
 }

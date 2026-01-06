@@ -1,6 +1,8 @@
 import { siteConfig } from "@/lib/config"
+import { Button } from "@/registry/new-york-v4/ui/button"
 import { PlaceAutocomplete } from "@/registry/new-york-v4/ui/place-autocomplete"
 import type { Metadata } from "next"
+import Link from "next/link"
 
 const title = siteConfig.title
 const description = siteConfig.description
@@ -39,6 +41,16 @@ export default function IndexPage() {
                     <p className="text-foreground max-w-3xl text-base text-balance sm:text-lg">
                         {description}
                     </p>
+                    <div className="flex w-full items-center justify-center gap-2 **:data-[slot=button]:shadow-none">
+                        <Button asChild size="sm">
+                            <Link href="/docs">Get Started</Link>
+                        </Button>
+                        <Button asChild size="sm" variant="ghost">
+                            <Link href="/docs/examples/controlled-value">
+                                View Examples
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
             </section>
             <div className="flex flex-1 flex-col items-center justify-center">
