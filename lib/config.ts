@@ -1,7 +1,7 @@
 export const siteConfig = {
     name: "shadcn place autocomplete",
     url: "https://shadcn-place-autocomplete.vercel.app",
-    title: "A place autocomplete component for shadcn/ui",
+    title: "A Place Autocomplete Component for shadcn/ui",
     description:
         "The open-source alternative to Google Places Autocomplete. Powered by OSM and Photon.",
     links: {

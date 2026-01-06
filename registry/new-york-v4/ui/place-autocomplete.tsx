@@ -284,7 +284,7 @@ function PlaceAutocomplete({
 
     return (
         <Command
-            className={cn("overflow-visible", className)}
+            className={cn("h-fit overflow-visible", className)}
             shouldFilter={false}
             loop>
             <div className="relative">

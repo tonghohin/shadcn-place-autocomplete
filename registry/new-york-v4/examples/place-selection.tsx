@@ -18,11 +18,11 @@ export function PlaceSelection() {
                     )
                 }}
             />
-            {selectedPlace && (
-                <p className="text-muted-foreground text-sm">
-                    Selected: {selectedPlace}
-                </p>
-            )}
+            <p className="text-muted-foreground text-sm">
+                {selectedPlace
+                    ? `Selected place: ${selectedPlace}`
+                    : "Start typing to select a place"}
+            </p>
         </div>
     )
 }

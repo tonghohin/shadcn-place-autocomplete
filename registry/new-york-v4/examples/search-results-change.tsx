@@ -8,17 +8,17 @@ export function SearchResultsChange() {
 
     return (
         <div className="flex flex-col gap-2">
+            <p className="text-muted-foreground text-sm">
+                {resultCount === 0
+                    ? "No results found"
+                    : `${resultCount} result${resultCount !== 1 ? "s" : ""} found`}
+            </p>
             <PlaceAutocomplete
                 className="w-96"
                 onResultsChange={(results) => {
                     setResultCount(results.length)
                 }}
             />
-            {resultCount > 0 && (
-                <p className="text-muted-foreground text-sm">
-                    Found {resultCount} result{resultCount !== 1 ? "s" : ""}.
-                </p>
-            )}
         </div>
     )
 }
