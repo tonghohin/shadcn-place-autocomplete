@@ -368,7 +368,7 @@ function PlaceAutocomplete({
                                                 onPlaceSelect?.(feature)
                                             }}>
                                             <MapPinIcon />
-                                            <div className="flex flex-col items-start">
+                                            <div className="flex flex-col items-start text-start">
                                                 <span className="font-medium">
                                                     {feature.properties.name ||
                                                         feature.properties
