@@ -36,7 +36,7 @@ export default function IndexPage() {
                     <h1 className="text-primary leading-tighter max-w-4xl text-4xl font-semibold tracking-tight text-balance lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter">
                         {title}
                     </h1>
-                    <p className="text-foreground mb-4 max-w-3xl text-base text-balance sm:text-lg">
+                    <p className="text-foreground mb-8 max-w-3xl text-base text-balance sm:text-lg">
                         {description}
                     </p>
                     <PlaceAutocomplete />
