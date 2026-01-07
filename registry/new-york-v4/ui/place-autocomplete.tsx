@@ -302,7 +302,6 @@ function PlaceAutocomplete({
                     <InputGroupInput
                         placeholder="Search"
                         value={displayValue}
-                        onBlur={() => setSearchQuery("")}
                         onChange={(event) => {
                             const newValue = event.target.value
                             if (!isControlled) {
