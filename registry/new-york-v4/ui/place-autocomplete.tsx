@@ -72,6 +72,17 @@ interface PlaceSearchOptions {
     locationBiasScale?: number
 }
 
+interface PlaceAutocompleteProps
+    extends Omit<PlaceSearchOptions, "query">,
+        Omit<React.ComponentProps<"input">, "value" | "onChange"> {
+    debounceMs?: number
+    value?: string
+    defaultValue?: string
+    onChange?: (value: string) => void
+    onPlaceSelect?: (feature: PlaceFeature) => void
+    onResultsChange?: (results: PlaceFeature[]) => void
+}
+
 function formatAddress(properties: PlaceFeatureProperties) {
     const parts = []
 
@@ -247,15 +258,7 @@ function PlaceAutocomplete({
     onPlaceSelect,
     onResultsChange,
     ...props
-}: {
-    debounceMs?: number
-    value?: string
-    defaultValue?: string
-    onChange?: (value: string) => void
-    onPlaceSelect?: (feature: PlaceFeature) => void
-    onResultsChange?: (results: PlaceFeature[]) => void
-} & Omit<PlaceSearchOptions, "query"> &
-    Omit<React.ComponentProps<"input">, "value" | "onChange">) {
+}: PlaceAutocompleteProps) {
     const [internalValue, setInternalValue] = React.useState(defaultValue)
     const [searchQuery, setSearchQuery] = React.useState("")
 
@@ -388,4 +391,4 @@ function PlaceAutocomplete({
     )
 }
 
-export { PlaceAutocomplete }
+export { PlaceAutocomplete, type PlaceAutocompleteProps }
