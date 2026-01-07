@@ -391,4 +391,4 @@ function PlaceAutocomplete({
     )
 }
 
-export { PlaceAutocomplete, type PlaceAutocompleteProps }
+export { PlaceAutocomplete, type PlaceAutocompleteProps, type PlaceFeature }
