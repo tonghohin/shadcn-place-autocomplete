@@ -1,0 +1,13 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "geocode-settings",
+    "type": "registry:example",
+    "registryDependencies": ["place-autocomplete"],
+    "files": [
+        {
+            "path": "registry/new-york-v4/examples/geocode-settings.tsx",
+            "content": "import { PlaceAutocomplete } from \"@/registry/new-york-v4/ui/place-autocomplete\"\n\nexport function GeocodeSettings() {\n    return (\n        <PlaceAutocomplete\n            className=\"w-96\"\n            limit={10}\n            lang=\"en\"\n            lat={40.7128}\n            lon={-74.006}\n            zoom={12}\n        />\n    )\n}\n",
+            "type": "registry:example"
+        }
+    ]
+}

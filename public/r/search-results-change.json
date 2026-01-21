@@ -1,0 +1,13 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "search-results-change",
+    "type": "registry:example",
+    "registryDependencies": ["place-autocomplete"],
+    "files": [
+        {
+            "path": "registry/new-york-v4/examples/search-results-change.tsx",
+            "content": "\"use client\"\n\nimport { PlaceAutocomplete } from \"@/registry/new-york-v4/ui/place-autocomplete\"\nimport React from \"react\"\n\nexport function SearchResultsChange() {\n    const [resultCount, setResultCount] = React.useState(0)\n\n    return (\n        <div className=\"flex flex-col gap-2\">\n            <p className=\"text-muted-foreground text-sm\">\n                {resultCount === 0\n                    ? \"No results found\"\n                    : `${resultCount} result${resultCount !== 1 ? \"s\" : \"\"} found`}\n            </p>\n            <PlaceAutocomplete\n                className=\"w-96\"\n                onResultsChange={(results) => {\n                    setResultCount(results.length)\n                }}\n            />\n        </div>\n    )\n}\n",
+            "type": "registry:example"
+        }
+    ]
+}

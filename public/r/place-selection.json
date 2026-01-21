@@ -1,0 +1,13 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "place-selection",
+    "type": "registry:example",
+    "registryDependencies": ["place-autocomplete"],
+    "files": [
+        {
+            "path": "registry/new-york-v4/examples/place-selection.tsx",
+            "content": "\"use client\"\n\nimport { PlaceAutocomplete } from \"@/registry/new-york-v4/ui/place-autocomplete\"\nimport React from \"react\"\n\nexport function PlaceSelection() {\n    const [selectedPlace, setSelectedPlace] = React.useState(\"\")\n\n    return (\n        <div className=\"flex flex-col gap-2\">\n            <PlaceAutocomplete\n                className=\"w-96\"\n                onPlaceSelect={(feature) => {\n                    setSelectedPlace(\n                        feature.properties.name ||\n                            feature.properties.street ||\n                            \"Unknown place\"\n                    )\n                }}\n            />\n            <p className=\"text-muted-foreground text-sm\">\n                {selectedPlace\n                    ? `Selected place: ${selectedPlace}`\n                    : \"Start typing to select a place\"}\n            </p>\n        </div>\n    )\n}\n",
+            "type": "registry:example"
+        }
+    ]
+}

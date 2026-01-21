@@ -293,7 +293,7 @@ function PlaceAutocomplete({
             <div className="relative">
                 <InputGroup
                     className={cn(
-                        "!border-input !bg-popover !ring-0",
+                        "border-input! bg-popover! ring-0!",
                         showCommandList && "rounded-b-none"
                     )}>
                     <InputGroupAddon>
